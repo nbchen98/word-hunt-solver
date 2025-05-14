@@ -1,0 +1,33 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #282c34;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+  }
+  
+  .board-row {
+    display: flex;
+  }
+  
+  .board-cell {
+    width: 90px;
+    height: 90px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+  
+  .board-cell:focus {
+    outline: none;
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+  }

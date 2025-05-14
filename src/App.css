@@ -1,38 +1,97 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.App-main {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+.game-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.reset-button {
+  background-color: #282c34;
   color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.reset-button:hover {
+  background-color: #3e4451;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+.words-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.words-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.words-list li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .board-cell {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .words-container {
+    width: 100%;
+    margin-top: 20px;
   }
 }
