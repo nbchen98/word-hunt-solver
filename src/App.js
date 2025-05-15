@@ -30,9 +30,20 @@ function App() {
   }, [board]);
 
   // Move focus to a cell
-  const focusCell = (row, col) => {
-    if (row >= 0 && row < 4 && col >= 0 && col < 4) {
-      inputRefs.current[row][col].current.focus();
+  const focusNextCell = (row, col) => {
+    if (col < 3) {
+      inputRefs.current[row][col + 1].current.focus();
+    } else if (row < 3) {
+      inputRefs.current[row + 1][0].current.focus();
+    }
+  };
+
+  // Move focus to the previous cell
+  const focusPrevCell = (row, col) => {
+    if (col > 0) {
+      inputRefs.current[row][col - 1].current.focus();
+    } else if (row > 0) {
+      inputRefs.current[row - 1][3].current.focus();
     }
   };
 
@@ -50,23 +61,16 @@ function App() {
     setBoard(newBoard);
 
     // Move to next cell if value entered
-    if(colIndex < 3) {
-      focusCell(rowIndex, colIndex + 1);
-    } else if(rowIndex < 3) {
-      focusCell(rowIndex + 1, 0);
+    if (value && value.match(/[a-zA-Z]/)) {
+      focusNextCell(rowIndex, colIndex);
     }
   };
 
   // Handle backspace change
   const handleCellKeyDown = (rowIndex, colIndex, e) => {
-    if (e.key === 'Backspace') {
-      if (!board[rowIndex][colIndex] || e.target.selectionStart === 0) {
-        if (colIndex > 0) {
-          focusCell(rowIndex, colIndex - 1);
-        } else if (rowIndex > 0) {
-          focusCell(rowIndex - 1, 3);
-        }
-        e.preventDefault();
+    if ((e.key === 'Backspace' || e.key === 'Delete')) {
+      if (!board[rowIndex][colIndex]) {
+        focusPrevCell(rowIndex, colIndex);
       }
     }
   };
