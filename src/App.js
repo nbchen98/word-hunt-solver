@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
 import { loadWordList } from './wordlist';
 import Board from './Board';
@@ -19,64 +19,7 @@ function App() {
     Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => React.createRef()))
   );
 
-  // Check board every time it changes
-  useEffect(() => {
-    const filled = board.every(row => row.every(cell => cell !== ''));
-    setIsBoardFilled(filled);
-
-    if (filled) {
-      findWords();
-    }
-  }, [board]);
-
-  // Move focus to a cell
-  const focusNextCell = (row, col) => {
-    if (col < 3) {
-      inputRefs.current[row][col + 1].current.focus();
-    } else if (row < 3) {
-      inputRefs.current[row + 1][0].current.focus();
-    }
-  };
-
-  // Move focus to the previous cell
-  const focusPrevCell = (row, col) => {
-    if (col > 0) {
-      inputRefs.current[row][col - 1].current.focus();
-    } else if (row > 0) {
-      inputRefs.current[row - 1][3].current.focus();
-    }
-  };
-
-  // Handle input change for each cell
-  const handleCellChange = (rowIndex, colIndex, value) => {
-    if (value.length > 1) {
-      value = value.charAt(value.length - 1);
-    }
-    if (value && !value.match(/[a-zA-Z]/)) {
-      return;
-    }
-
-    const newBoard = board.map(row => [...row]);
-    newBoard[rowIndex][colIndex] = value.toUpperCase();
-    setBoard(newBoard);
-
-    // Move to next cell if value entered
-    if (value && value.match(/[a-zA-Z]/)) {
-      focusNextCell(rowIndex, colIndex);
-    }
-  };
-
-  // Handle backspace change
-  const handleCellKeyDown = (rowIndex, colIndex, e) => {
-    if ((e.key === 'Backspace' || e.key === 'Delete')) {
-      if (!board[rowIndex][colIndex]) {
-        focusPrevCell(rowIndex, colIndex);
-      }
-    }
-  };
-
-  // Function to find words on the board
-  const findWords = () => {
+  const findWords = useCallback(() => {
     if (!wordList.length) return;
     const found = new Set();
     const n = board.length;
@@ -141,6 +84,58 @@ function App() {
       }
     }
     setWords(Array.from(found).sort((a, b) => b.length - a.length || a.localeCompare(b)));
+  }, [board, wordList]);
+
+  // Check board every time it changes
+  useEffect(() => {
+    const filled = board.every(row => row.every(cell => cell !== ''));
+    setIsBoardFilled(filled);
+
+    if (filled) {
+      findWords();
+    }
+  }, [board, findWords]);
+
+  // Move focus to a cell
+  const focusCell = (row, col) => {
+    if (row >= 0 && row < 4 && col >= 0 && col < 4) {
+      inputRefs.current[row][col].current.focus();
+    }
+  };
+
+  // Handle input change for each cell
+  const handleCellChange = (rowIndex, colIndex, value) => {
+    if (value.length > 1) {
+      value = value.charAt(value.length - 1);
+    }
+    if (value && !value.match(/[a-zA-Z]/)) {
+      return;
+    }
+
+    const newBoard = board.map(row => [...row]);
+    newBoard[rowIndex][colIndex] = value.toUpperCase();
+    setBoard(newBoard);
+
+    // Move to next cell if value entered
+    if(colIndex < 3) {
+      focusCell(rowIndex, colIndex + 1);
+    } else if(rowIndex < 3) {
+      focusCell(rowIndex + 1, 0);
+    }
+  };
+
+  // Handle backspace change
+  const handleCellKeyDown = (rowIndex, colIndex, e) => {
+    if (e.key === 'Backspace') {
+      if (!board[rowIndex][colIndex] || e.target.selectionStart === 0) {
+        if (colIndex > 0) {
+          focusCell(rowIndex, colIndex - 1);
+        } else if (rowIndex > 0) {
+          focusCell(rowIndex - 1, 3);
+        }
+        e.preventDefault();
+      }
+    }
   };
 
   const resetBoard = () => {
