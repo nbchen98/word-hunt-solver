@@ -2,7 +2,7 @@
   "name": "wordhunt-solved",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nbchen98.github.io/wordhunt-solved",
+  "homepage": "https://nbchen98.github.io/word-hunt-solver",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
