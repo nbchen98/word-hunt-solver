@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/wordhunt-solved/static/css/main.0a16db6c.css",
+    "main.js": "/wordhunt-solved/static/js/main.037721fa.js",
+    "static/js/453.7631ef01.chunk.js": "/wordhunt-solved/static/js/453.7631ef01.chunk.js",
+    "index.html": "/wordhunt-solved/index.html",
+    "main.0a16db6c.css.map": "/wordhunt-solved/static/css/main.0a16db6c.css.map",
+    "main.037721fa.js.map": "/wordhunt-solved/static/js/main.037721fa.js.map",
+    "453.7631ef01.chunk.js.map": "/wordhunt-solved/static/js/453.7631ef01.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0a16db6c.css",
+    "static/js/main.037721fa.js"
+  ]
+}
