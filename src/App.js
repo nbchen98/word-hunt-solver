@@ -128,7 +128,6 @@ function App() {
   const handleCellKeyDown = (rowIndex, colIndex, e) => {
     if (e.key === 'Backspace') {
       if (!board[rowIndex][colIndex] || e.target.selectionStart === 0) {
-        // Move to previous cell if current is empty or cursor at start
         if (colIndex > 0) {
           focusCell(rowIndex, colIndex - 1);
         } else if (rowIndex > 0) {
